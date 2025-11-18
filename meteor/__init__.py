@@ -48,7 +48,7 @@ def create_app(config_class=Config, config_json=None):
 
     if app.debug:
         app.logger.setLevel(logging.DEBUG)
-
+    
     if app.config.get("SLACK_LOGGING_ENABLED"):
         try:
             slack_handler = create_slackhandler(app.config.get("SLACK_WEBHOOK"))
@@ -69,7 +69,6 @@ def create_app(config_class=Config, config_json=None):
     jwt.init_app(app)
     dgraph.init_app(app)
     mail.init_app(app)
-
 
     # Blueprints Registration
     from meteor.api.routes import api

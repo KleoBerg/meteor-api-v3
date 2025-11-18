@@ -5,17 +5,20 @@ import pydgraph
 
 class DGraph(object):
     # Class for dgraph database connection
+                                                  
+    def __init__(self):                                                  
+        self.dgraph_stub = None    
 
     def init_app(self, app):
-        self.app = app
 
-        if "dgraph" in app.extensions and "stub" in app.extensions["dgraph"]:
+        if "dgraph" in app.extensions:
             app.logger.warning("DGraph extension already initialized for this app.")
             return
 
-        app.extensions.setdefault("dgraph", {})
+        app.extensions["dgraph"] = self
+        app.dgraph = self
 
-        app.extensions["dgraph"]["stub"] = pydgraph.DgraphClientStub(
+        self.dgraph_stub = pydgraph.DgraphClientStub(
             app.config.get("DGRAPH_ENDPOINT", "localhost:9080"),
             credentials=app.config.get("DGRAPH_CREDENTIALS", None),
             options=app.config.get("DGRAPH_OPTIONS", None),
@@ -31,14 +34,12 @@ class DGraph(object):
                 f"Establishing connection to DGraph: {current_app.config.get('DGRAPH_ENDPOINT')}"
             )
 
-            dgraph_stub = current_app.extensions.get("dgraph", {}).get("stub")
-
-            if dgraph_stub is None:
+            if self.dgraph_stub is None:
                 raise RuntimeError(
                     "DGraph client stub is not initialized. Ensure init_app has been called."
                 )
 
-            g.dgraph_client = pydgraph.DgraphClient(dgraph_stub)
+            g.dgraph_client = pydgraph.DgraphClient(self.dgraph_stub)
 
         return g.dgraph_client
 

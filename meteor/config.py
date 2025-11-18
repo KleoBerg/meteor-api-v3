@@ -56,12 +56,14 @@ class Config:
 
 class RequestFormatter(logging.Formatter):
     def format(self, record):
+            
         if has_request_context():
             record.url = request.url
             record.remote_addr = get_ip()
         else:
             record.url = None
             record.remote_addr = None
+
 
         return super().format(record)
 
