@@ -11,8 +11,7 @@ def status():
 # JUST A TEST ROUTE TO CHECK DGRAPH CONNECTION
 @api.route('/dgraph-status', methods=['GET'])                                   
 def dgraph_status():                                                            
-    try:                                                                        
-        # We now know this returns a string, so we'll name it accordingly.      
+    try:                                                                           
         version_string = current_app.extensions["dgraph"].connection.check_version()     
 
         return jsonify({                                                        

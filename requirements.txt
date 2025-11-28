@@ -3,5 +3,27 @@ pydgraph==24.3.0
 flask-cors==6.0.1
 Flask-Mail==0.10.0
 
-
+python-slugify==8.0.4
+python-dateutil==2.9.0
 requests==2.32.5
+
+
+PyJWT==2.10.1
+Flask-JWT-Extended==4.7.1
+
+
+# used for scraper functionality, instagram, twitter, telegram, etc...
+feedparser
+bs4
+lxml
+instaloader
+tweepy
+telethon
+thefuzz #used by orcid
+
+
+# kann gelöscht werden wenn frontend functionality entfernt ist
+WTForms
+Flask-WTF
+Flask-Login #schauen ob backend das aus verwendet
+
